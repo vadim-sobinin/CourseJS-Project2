@@ -12,6 +12,11 @@ module.exports = {
     static: {
       directory: './public',
       watch: true
-    }
-  }
+    },
+    open: {
+      app: {
+        name: "Google Chrome",
+      },
+    },
+  },
 };
