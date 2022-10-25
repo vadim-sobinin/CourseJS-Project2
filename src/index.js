@@ -1,6 +1,6 @@
 'use strict';
- import One from "./modules/one";
- import Two from "./modules/two";
+ import timer from "./modules/timer";
 
- One();
- Two();
+
+ timer("26 october 2022");
+
