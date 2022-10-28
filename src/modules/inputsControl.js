@@ -17,10 +17,26 @@ const inputsControl = () => {
       event.target.value = event.target.value.replace(/([^а-яА-Я\-\ ]+)/, "");
     });
 
+
   const nameForms = document.querySelectorAll("input[placeholder='Your name']");
   nameForms.forEach((element) => {
-    element.addEventListener("input", (event) => {
-      event.target.value = event.target.value.replace(/([^а-яА-Я\-\ ]+)/, "");
+    element.addEventListener("blur", (event) => {
+      let correctedInput = (event.target.value.replace(/ {2,}/g," "));
+      correctedInput = (correctedInput.replace(/-{2,}/g,"-cv"));
+      correctedInput = correctedInput.replace(/[^а-яА-ЯËё\-\ ]/g, "");
+      correctedInput = correctedInput.replace(/^ +| +$|( ) +/g, "$1");
+      correctedInput = correctedInput.replace(/^-+|-+$/gm, "");
+      
+      correctedInput = correctedInput.replace(/( |^)[а-яА-ЯËё]/g, function(letter){ return letter.toUpperCase(); });
+      
+       let newCorrectedInput = correctedInput.split(" ").map((word) => {
+        return word.split("").reduce((total, letter) => total + letter.toLowerCase());
+      });
+
+      
+      event.target.value = newCorrectedInput.join(" ");
+
+
     });
   });
 
