@@ -5,64 +5,52 @@ const modal = () => {
   const modal = document.querySelector(".popup");
   const modalCloseBtn = modal.querySelector(".popup-close");
 
+  let isOpen = false;
   let step = 0;
 
   popUpBnts.forEach((btn) => {
     btn.addEventListener("click", () => {
-      
-      const width = document.documentElement.clientWidth;
-
-      if (width >= 768) {
-        modal.style.display = "block";
-      modal.style.opacity = "0";
-      const timerId1 = setInterval(() => {
-        if (step < 100) {
-          showModal();
-        } else {
-          clearInterval(timerId1);
-        }
-      }, 5);
-      } else {
-        modal.style.display = "block";
-        modal.style.opacity = "1";
-        step = 100;
-      }
-      
+      modalAnimationControl();
     });
   });
 
-  modalCloseBtn.addEventListener("click", () => {
-
-    const width = document.documentElement.clientWidth;
-    if (width >= 768) {
-      const timerId2 = setInterval(() => {
-        if (step > 0) {
-          hideModal();
-        } else {
-          clearInterval(timerId2);
-        }
-      }, 5);
-    } else {
-      modal.style.display = "none";
-      modal.style.opacity = "0";
-      step = 0;
-    }
+  const modalAnimationControl = () => {
     
+    const width = document.documentElement.clientWidth;
+
+
+    if (width >= 768) {
+
+      const timerId = setInterval(() => {
+        
+        isOpen ? step-- : step++;
+        modal.style.opacity = step / 100;
+        (step >= 100 || step <= 0) ? (clearInterval(timerId), isOpen = !isOpen) : null;
+        step <= 0 ? modal.style.display = "none": modal.style.display = "block";
+      }, 5);
+      
+
+    } else {
+      
+      !isOpen ? (modal.style.display = "block",
+      modal.style.opacity = "1",
+      step = 100) : (modal.style.display = "none",
+      modal.style.opacity = "0",
+      step = 0);
+      isOpen = !isOpen;
+    }
+  };
+  
+  modalCloseBtn.addEventListener("click", () => {
+    modalAnimationControl();
   });
 
-  const showModal = () => {
-    step++;
-    modal.style.opacity = step / 100;
-  };
-
-  const hideModal = () => {
-    step--;
-    modal.style.opacity = step / 100;
-
-    if (step === 0) {
-      modal.style.display = "none";
+  modal.addEventListener("click", (e) => {
+    if (!e.target.closest(".popup-content")) {
+      modalAnimationControl();
     }
-  };
+  });
+
 };
 
 export default modal;
