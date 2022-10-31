@@ -3,7 +3,6 @@
 const modal = () => {
   const popUpBnts = document.querySelectorAll(".popup-btn");
   const modal = document.querySelector(".popup");
-  const modalCloseBtn = modal.querySelector(".popup-close");
 
   let isOpen = false;
   let step = 0;
@@ -12,6 +11,12 @@ const modal = () => {
     btn.addEventListener("click", () => {
       modalAnimationControl();
     });
+  });
+
+  modal.addEventListener("click", (e) => {
+    if (!e.target.closest(".popup-content") || e.target.classList.contains("popup-close")) {
+      modalAnimationControl();
+    }
   });
 
   const modalAnimationControl = () => {
@@ -40,16 +45,8 @@ const modal = () => {
       isOpen = !isOpen;
     }
   };
-  
-  modalCloseBtn.addEventListener("click", () => {
-    modalAnimationControl();
-  });
 
-  modal.addEventListener("click", (e) => {
-    if (!e.target.closest(".popup-content")) {
-      modalAnimationControl();
-    }
-  });
+  
 
 };
 
