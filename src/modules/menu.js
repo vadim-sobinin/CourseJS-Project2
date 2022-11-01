@@ -2,40 +2,35 @@
 
 const menu = () => {
 
-  const menuBtn = document.querySelector(".menu");
   const menu = document.querySelector("menu");
-  const closeBtn = menu.querySelector(".close-btn");
-  const menuItems = menu.querySelectorAll("ul>li>a");
-  const scrollToSetviceBtn = document.querySelector("main>a");
 
+  document.body.addEventListener('click', (e) => {
 
-  
-  const handleMenu = () => {
-    menu.classList.toggle('active-menu');
-  };
+    if (e.target.closest(".menu")) {
+      menu.classList.toggle('active-menu');
+    }
+    if (e.target.closest(".close-btn")) {
+      e.preventDefault();
+      menu.classList.toggle('active-menu');
+    }
 
-  scrollToSetviceBtn.addEventListener('click', (event) => {
-    event.preventDefault();
-    document.querySelector("#service-block").scrollIntoView({behavior: "smooth"});
-  });
-
-  menuBtn.addEventListener('click', handleMenu);
-  closeBtn.addEventListener('click', handleMenu);
-  menuItems.forEach(item => {
-    item.addEventListener('click', handleMenu);
-    const sectionId = item.href.split("/")[3];
-    const referencedSection = document.querySelector(sectionId);
-    
-    item.addEventListener('click', (event) => {
-      event.preventDefault();
-      console.log("Scroll");
+    if (e.target.closest("ul>li>a")) {
+      e.preventDefault();
+      const sectionId = e.target.href.split("/")[3];
+      const referencedSection = document.querySelector(sectionId);
+      menu.classList.toggle('active-menu');
       referencedSection.scrollIntoView({behavior: "smooth"});
-    });
+    }
 
+    if (e.target.closest("main>a")) {
+      e.preventDefault();
+      document.querySelector("#service-block").scrollIntoView({behavior: "smooth"});
+    }
+        
+    if (!e.target.closest(".active-menu") && !e.target.closest(".menu") && menu.classList.contains("active-menu")){
+      menu.classList.toggle('active-menu');
+    }
   });
-
-
-
 
 };
 
