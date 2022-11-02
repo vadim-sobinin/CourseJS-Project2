@@ -4,6 +4,7 @@ import menu from "./modules/menu";
 import modal from "./modules/modal";
 import inputsControl from './modules/inputsControl';
 import tabs from './modules/tabs';
+import slider from './modules/slider'
 
 
 
@@ -12,3 +13,4 @@ menu();
 modal();
 inputsControl();
 tabs();
+slider();
