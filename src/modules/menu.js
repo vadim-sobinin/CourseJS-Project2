@@ -16,7 +16,8 @@ const menu = () => {
 
     if (e.target.closest("ul>li>a")) {
       e.preventDefault();
-      const sectionId = e.target.href.split("/")[3];
+
+      const sectionId = e.target.href.split("/")[e.target.href.split("/").length - 1];
       const referencedSection = document.querySelector(sectionId);
       menu.classList.toggle('active-menu');
       referencedSection.scrollIntoView({behavior: "smooth"});
