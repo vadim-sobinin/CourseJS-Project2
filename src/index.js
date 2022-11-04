@@ -8,7 +8,7 @@ import slider from './modules/slider'
 
 
 
-timer("4 november 2022");
+timer("10 november 2022");
 menu();
 modal();
 inputsControl();
