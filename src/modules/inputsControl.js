@@ -4,12 +4,12 @@ const inputsControl = () => {
   const calcBlock = document.querySelector(".calc-block");
 
   calcBlock.querySelectorAll(".calc-item").forEach((element) => {
-    element.addEventListener("blur", (event) => {
+    element.addEventListener("input", (event) => {
       event.target.value = event.target.value.replace(/\D+/, "");
     });
   });
 
-  calcBlock.querySelector(".calc-type")[2].value = "3";
+  calcBlock.querySelector(".calc-type")[2].value = "999";
 
   document
     .querySelector('input[placeholder="Your message"]')
@@ -38,7 +38,7 @@ const inputsControl = () => {
       if (correctedInput != "") {
       correctedInput = correctedInput.replace(/( |^)[а-яА-ЯËё]/g, function(letter){ return letter.toUpperCase(); });
       
-       let newCorrectedInput = correctedInput.split(" ").map((word) => {
+      let newCorrectedInput = correctedInput.split(" ").map((word) => {
         return word.split("").reduce((total, letter) => total + letter.toLowerCase());
       });
 
