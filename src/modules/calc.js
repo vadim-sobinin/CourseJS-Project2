@@ -24,12 +24,9 @@ const calc = (price = 5) => {
   const counterAnimation = (requiredNum, elem) => {
     const animationTime = 200;
     let number = +elem.textContent.split("$")[0];
-    console.log(elem.textContent.split("$")[0]);
     const t = Math.round(animationTime/requiredNum);
     const interval = setInterval(() => {
-      console.log(number);
       const step = stepControl(requiredNum, number);
-      console.log("Step:" + step);
       if (requiredNum > number) {
         number = number + step;
       }
@@ -69,7 +66,6 @@ const calc = (price = 5) => {
     } else {
       totalValue = 0;
     }
-    console.log("Total: " + totalValue);
     counterAnimation(totalValue, total);
     // total.textContent = totalValue + "$";
   };
