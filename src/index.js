@@ -9,7 +9,7 @@ import calc from './modules/calc'
 
 
 
-timer("10 november 2022");
+timer("10 december 2022");
 menu();
 modal();
 inputsControl();

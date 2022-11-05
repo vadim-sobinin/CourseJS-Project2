@@ -1,4 +1,5 @@
 "use strict";
+import { animate } from "./helpers";
 
 const modal = () => {
   const popUpBnts = document.querySelectorAll(".popup-btn");
@@ -6,6 +7,8 @@ const modal = () => {
 
   let isOpen = false;
   let step = 0;
+
+  modal.style.opacity === "0"
 
   popUpBnts.forEach((btn) => {
     btn.addEventListener("click", () => {
@@ -23,26 +26,22 @@ const modal = () => {
     
     const width = document.documentElement.clientWidth;
 
-
+    isOpen = !isOpen;
+    console.log(isOpen);
     if (width >= 768) {
-
-      const timerId = setInterval(() => {
-        
-        isOpen ? step-- : step++;
-        modal.style.opacity = step / 100;
-        (step >= 100 || step <= 0) ? (clearInterval(timerId), isOpen = !isOpen) : null;
-        step <= 0 ? modal.style.display = "none": modal.style.display = "block";
-      }, 5);
-      
-
-    } else {
-      
-      !isOpen ? (modal.style.display = "block",
-      modal.style.opacity = "1",
-      step = 100) : (modal.style.display = "none",
-      modal.style.opacity = "0",
-      step = 0);
-      isOpen = !isOpen;
+      isOpen ? modal.style.display === "block" : null;
+      animate({
+        duration: 1000,
+        timing(timeFraction) {
+          return timeFraction;
+        },
+        draw(progress) {
+          isOpen ? modal.style.opacity = progress : modal.style.opacity = 1 - progress;
+          console.log(isOpen);
+        }
+      });
+      modal.style.opacity === "0" ? (modal.style.display = "none", console.log("0 value")) : null;
+      console.log(modal.style.opacity)
     }
   };
 
