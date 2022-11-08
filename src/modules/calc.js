@@ -1,45 +1,34 @@
+import { animate } from './helpers';
+
 const calc = (price = 5) => {
-  const calcBlock = document.querySelector(".calc-block");
-  const calcType = document.querySelector(".calc-type");
-  const calcSquare = document.querySelector(".calc-square");
-  const calcCount = document.querySelector(".calc-count");
-  const calcDay = document.querySelector(".calc-day");
-  const total = document.querySelector("#total");
+  const calcBlock = document.querySelector('.calc-block');
+  const calcType = document.querySelector('.calc-type');
+  const calcSquare = document.querySelector('.calc-square');
+  const calcCount = document.querySelector('.calc-count');
+  const calcDay = document.querySelector('.calc-day');
+  const total = document.querySelector('#total');
 
   // Total sum animation
-  
-  const stepControl = (requiredNum, number) => {
 
-    if (Math.abs(requiredNum - number) > 10000){
-      return 1000;
-    } else if (Math.abs(requiredNum - number) > 1000){
-      return 100;
-    } else if (Math.abs(requiredNum - number) > 100){
-      return 10;
-    } else {
-      return 1;
-    }
-  }
+  // const counterAnimation = (requiredNum, elem) => {
+  //   const animationTime = 200;
+  //   let number = +elem.textContent.split("$")[0];
+  //   const t = Math.round(animationTime/requiredNum);
+  //   const interval = setInterval(() => {
+  //     const step = stepControl(requiredNum, number);
+  //     if (requiredNum > number) {
+  //       number = number + step;
+  //     }
+  //     if (requiredNum < number) {
+  //       number = number - step;
+  //     }
+  //     if (requiredNum == number) {
+  //       clearInterval(interval);
+  //     }
 
-  const counterAnimation = (requiredNum, elem) => {
-    const animationTime = 200;
-    let number = +elem.textContent.split("$")[0];
-    const t = Math.round(animationTime/requiredNum);
-    const interval = setInterval(() => {
-      const step = stepControl(requiredNum, number);
-      if (requiredNum > number) {
-        number = number + step;
-      }
-      if (requiredNum < number) {
-        number = number - step;
-      }
-      if (requiredNum == number) {
-        clearInterval(interval);
-      }
-      
-      elem.textContent = number + "$";
-    }, t);
-  };
+  //     elem.textContent = number + "$";
+  //   }, t);
+  // };
 
   const countCalc = () => {
     let calcTypeValue = +calcType.options[calcType.selectedIndex].value;
@@ -61,16 +50,24 @@ const calc = (price = 5) => {
     }
 
     if (calcType.value && calcSquare.value) {
-      totalValue =
-        price * calcTypeValue * calcSquareValue * calcCountValue * calcDayValue;
+      totalValue = price * calcTypeValue * calcSquareValue * calcCountValue * calcDayValue;
     } else {
       totalValue = 0;
     }
-    counterAnimation(totalValue, total);
+    animate({
+      duration: 500,
+      timing(timeFraction) {
+        return timeFraction;
+      },
+      draw(progress) {
+        total.textContent = Math.round(totalValue * progress) + '$';
+      },
+    });
+    // counterAnimation(totalValue, total);
     // total.textContent = totalValue + "$";
   };
 
-  calcBlock.addEventListener("input", (e) => {
+  calcBlock.addEventListener('input', (e) => {
     e.target === calcType ||
     e.target === calcSquare ||
     e.target === calcCount ||
