@@ -31,7 +31,11 @@ const sendForm = ({ formId, someElem = [] }) => {
       const element = document.getElementById(elem.id);
 
       if (elem.type === 'block') {
-        dataObj[elem.id] = element.textContent;
+        dataObj[elem.id] = element.textContent.includes('$')
+          ? +element.textContent.split('$')[0]
+          : isNaN
+          ? +element.textContent
+          : element.textContent;
       } else if (elem.type === 'input') {
         dataObj[elem.id] = element.value;
       }
@@ -40,11 +44,20 @@ const sendForm = ({ formId, someElem = [] }) => {
     sendData(dataObj)
       .then((data) => {
         statusBlock.innerHTML = successText;
-        console.log(data);
       })
+      .then(() =>
+        setTimeout(() => {
+          statusBlock.remove();
+        }, 10000),
+      )
       .catch((err) => {
         statusBlock.innerHTML = errorText;
-      });
+      })
+      .then(() =>
+        setTimeout(() => {
+          statusBlock.remove();
+        }, 10000),
+      );
   };
 
   try {
